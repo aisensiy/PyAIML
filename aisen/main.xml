@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<aiml version="1.0.1" xmlns="http://alicebot.org/2001/AIML-1.0.1"
+      xmlns:html="http://www.w3.org/1999/xhtml"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 http://aitools.org/aiml/schema/AIML.xsd">
+	  <category>
+		  <pattern>YES</pattern>
+		  <that>_ DO YOU LIKE ME</that>
+		  <template>nice to hear that.</template>
+	  </category>
+      <category>
+	      <pattern>HI</pattern>
+	      <template>Hi. Do you like me?</template>
+      </category>
+      <category>
+	      <pattern>SAY *</pattern>
+	      <template><star /></template>
+      </category>
+      <category>
+      	<pattern>说 *</pattern>
+      	<template><srai>SAY <star /></srai></template>
+      </category>
+	  <category>
+		  <pattern>SHOW GLOBALS</pattern>
+		  <template>
+			  <system>
+				  print globals()['createcategory']
+			  </system>
+		  </template>
+	  </category>
+      <category>
+      	<pattern>加载系统标签</pattern>
+      	<template>
+      		<system xml:space="preserve">
+				def createcategory(pattern, template):
+					xmldoc = minidom.Document()
+					root = xmldoc.appendChild(xmldoc.createElement('aiml'))
+					cg = xmldoc.createElement('category')
+					pt = xmldoc.createElement('pattern')
+					pt.appendChild(xmldoc.createTextNode(Utils.toUpperCase(pattern)))
+					tp = xmldoc.createElement('template')
+					tp.appendChild(xmldoc.createTextNode(template))
+					cg.appendChild(pt)
+					cg.appendChild(tp)
+					root.appendChild(cg)
+					return xmldoc
+
+				def addcategory(xmldoc, cgdom):
+					root = xmldoc.getElementsByTagName('aiml')[0]
+					cg = cgdom.getElementsByTagName('category')[0]
+					root.appendChild(cg)
+					return xmldoc
+
+				def addtobrain(kernel, filename, xmldoc):
+					if not os.path.exists(filename):
+						file = codecs.open(filename, 'w', encoding='utf-8')
+						xmldoc.writexml(file, '', '\t', '\n', encoding='utf-8')
+						file.close()
+					else:
+						xmldom = minidom.parse(filename)
+						addcategory(xmldom, xmldoc)	
+						file = codecs.open(filename, 'w', encoding='utf-8')
+						xmldom.writexml(file, '', '\t', '\n', encoding='utf-8')
+						file.close()
+					kernel.learn(filename)
+
+				globals()['createcategory'] = createcategory
+				globals()['addtobrain'] = addtobrain
+				globals()['addcategory'] = addcategory
+
+      		</system>
+      	</template>
+      </category>
+	  <category>
+		  <pattern>*</pattern>
+		  <template>no answer</template>
+	  </category>
+	  <category>
+		  <pattern>NOT * GOOD ANSWER</pattern>
+		  <template><srai>BAD ANSWER</srai></template>
+	  </category>
+	  <category>
+		  <pattern>BAD ANSWER</pattern>
+		  <template>what would be a good answer?</template>
+	  </category>
+	  <category>
+		  <pattern>* BAD ANSWER *</pattern>
+		  <template><srai>NOT <star /> GOOD ANSWER</srai></template>
+	  </category>
+
+	  <category>
+		  <pattern>* NOT * GOOG ANSWER *</pattern>
+		  <template><srai> <star /> NOT <star /> GOOD ANSWER</srai></template>
+	  </category>
+	  <category>
+		  <pattern>*</pattern>
+		  <that>WHAT WOULD BE A GOOD ANSWER</that>
+		  <template>
+			  <system>
+				  addtobrain(k, 'client.aiml', createcategory(u'<input index="3" />', u'<input index="1" />'))
+		      </system>
+			  OK, just ask again.
+	      </template>
+	  </category>
+      <category>
+	      <pattern>topic *</pattern>
+	      <template>I've now reset the topic to <set name="name"><star/></set>.</template>
+      </category>
+      <category>
+	      <pattern>What is our topic now</pattern>
+	      <template>It is <get name="topic" /></template>
+      </category>
+      <category>
+	      <pattern>测 试</pattern>
+	      <template>有 空 格 的 时 候 匹 配 。</template>
+      </category>
+
+</aiml>
