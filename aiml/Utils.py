@@ -5,6 +5,12 @@ modules in the PyAIML package.
 """
 import re
 
+def chineseSplit(input):
+	return re.sub(u'([\u2e80-\uffff])(?=[\u2e80-\uffff])', r'\1 ', input)
+
+def chineseCon(output):
+	return re.sub(u'([\u2e80-\uffff]) +(?=[\u2e80-\uffff])', r'\1', output)
+
 def toUpperCase(strs):
 	return strs.upper()	
 
@@ -49,3 +55,9 @@ if __name__ == "__main__":
     # cmd normalize
     cmd = '\n         echo hhh\n           echo bbbb\n      \t\t'
     print commandnormalize(cmd)
+    sss = u'测 试 测 试 ali ce'
+    sss2 = u'测试测试 alice'
+    print repr(sss)
+    print chineseCon(sss)
+    print chineseSplit(sss2)
+

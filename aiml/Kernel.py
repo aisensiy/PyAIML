@@ -314,6 +314,9 @@ class Kernel:
         except UnicodeError: pass
         except AttributeError: pass
         
+        #---->chinese process
+        input = Utils.chineseSplit(input)
+        
         # prevent other threads from stomping all over us.
         self._respondLock.acquire()
 
@@ -347,6 +350,9 @@ class Kernel:
         finalResponse = finalResponse.strip()
 
         assert(len(self.getPredicate(self._inputStack, sessionID)) == 0)
+        
+        #----> output process
+        finalResponse = Utils.chineseCon(finalResponse)
         
         # release the lock and return
         self._respondLock.release()
@@ -897,8 +903,8 @@ class Kernel:
         command = ""
         for e in elem[2:]:
             command += self._processElement(e, sessionID)
-#        print 'original: ', repr(command)
-#        print 'command: ', repr(Utils.commandnormalize(command))
+        
+        #---->save temp python file
         file = codecs.open('temp.py', 'w', encoding='utf-8')
         file.write('# -*- coding: utf-8 -*- \n')
         file.write(Utils.commandnormalize(command))
@@ -916,10 +922,12 @@ class Kernel:
         # execute the command.
         response = ""
         
+        #----> then run the temp python
         try:
             execfile('temp.py', globals(), locals())
         except SyntaxError, err:
             sys.stderr.write(str(err))
+        #----> comment the original codes
 #        try:
 #            out = os.popen(command)            
 #        except RuntimeError, msg:

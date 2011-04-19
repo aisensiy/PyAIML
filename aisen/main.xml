@@ -30,7 +30,7 @@
 		  </template>
 	  </category>
       <category>
-      	<pattern>加载系统标签</pattern>
+      	<pattern>加 载 系 统 标 签</pattern>
       	<template>
       		<system xml:space="preserve">
 				def createcategory(pattern, template):
@@ -55,13 +55,13 @@
 				def addtobrain(kernel, filename, xmldoc):
 					if not os.path.exists(filename):
 						file = codecs.open(filename, 'w', encoding='utf-8')
-						xmldoc.writexml(file, '', '\t', '\n', encoding='utf-8')
+						xmldoc.writexml(file, encoding='utf-8')
 						file.close()
 					else:
 						xmldom = minidom.parse(filename)
 						addcategory(xmldom, xmldoc)	
 						file = codecs.open(filename, 'w', encoding='utf-8')
-						xmldom.writexml(file, '', '\t', '\n', encoding='utf-8')
+						xmldom.writexml(file, encoding='utf-8')
 						file.close()
 					kernel.learn(filename)
 
