@@ -1,1 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?><aiml><category><pattern>你 好</pattern><template>你 好</template></category></aiml>
+<?xml version="1.0" encoding="utf-8"?><aiml><category><pattern>你 好</pattern><template>你 好</template></category><category><pattern>怎 么 进 入 学 习 模 式</pattern><template>输 入 topic 学 习</template></category></aiml>

@@ -29,6 +29,19 @@
 			  </system>
 		  </template>
 	  </category>
+	  <topic name='学 习'>
+		  <category>
+			  <pattern>*</pattern>
+			  <template>
+				  <system xml:space="preserve">
+					__import__('re')
+					qa = re.split(r'[QA]:', u'<star />'.strip())
+					if len(qa) == 3:
+						addtobrain(k, 'client.aiml', createcategory(qa[1].strip(), qa[2].strip()))
+				  </system>
+			  </template>
+		  </category>
+	  </topic>
       <category>
       	<pattern>加 载 系 统 标 签</pattern>
       	<template>
@@ -74,7 +87,13 @@
       </category>
 	  <category>
 		  <pattern>*</pattern>
-		  <template>no answer</template>
+		  <template>
+			  <random>
+				  <li>这 个 回 答 起 来 比 较 困 难 哦。</li>
+				  <li>让 我 们 换 个 话 题 吧。你 喜 欢 旅 行 么? </li>
+				  <li>嗯，不 好 说 哦</li>
+			  </random>
+		  </template>
 	  </category>
 	  <category>
 		  <pattern>NOT * GOOD ANSWER</pattern>
@@ -100,20 +119,19 @@
 			  <system>
 				  addtobrain(k, 'client.aiml', createcategory(u'<input index="3" />', u'<input index="1" />'))
 		      </system>
-			  OK, just ask again.
+			 好，你可以再试一试 
 	      </template>
 	  </category>
       <category>
-	      <pattern>topic *</pattern>
-	      <template>I've now reset the topic to <set name="name"><star/></set>.</template>
+	      <pattern>TOPIC *</pattern>
+	      <template>I've now reset the topic to <set name="topic"><star/></set>.</template>
       </category>
       <category>
-	      <pattern>What is our topic now</pattern>
-	      <template>It is <get name="topic" /></template>
+	      <pattern>WHAT IS OUR TOPIC NOW</pattern>
+	      <template>topic: <get name="topic" /></template>
       </category>
-      <category>
-	      <pattern>测 试</pattern>
-	      <template>有 空 格 的 时 候 匹 配 。</template>
-      </category>
-
+	  <category>
+		  <pattern>RESET TOPIC</pattern>
+		  <template><set name="topic"></set></template>
+	  </category>
 </aiml>
