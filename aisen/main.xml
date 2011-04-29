@@ -29,6 +29,15 @@
 			  </system>
 		  </template>
 	  </category>
+	  <category>
+		 <pattern>Q: * A: *</pattern>
+		 <template>
+			 <system xml:space="preserve">
+				 addtobrain(k, 'client.aiml', createcategory(u'<star index="1" />', u'<star index="2" />'))
+			 </system>
+			 记录这这样的问答，问题: <star index="1" /> 回答: <star index="2" />
+		 </template>
+	  </category>
 	  <topic name='学 习'>
 		  <category>
 			  <pattern>*</pattern>
@@ -92,29 +101,61 @@
 				  <li>这 个 回 答 起 来 比 较 困 难 哦。</li>
 				  <li>让 我 们 换 个 话 题 吧。你 喜 欢 旅 行 么? </li>
 				  <li>嗯，不 好 说 哦</li>
+				  <li>这 个 我 不 知 道 怎 么 答 哦。</li>
 			  </random>
 		  </template>
 	  </category>
 	  <category>
-		  <pattern>NOT * GOOD ANSWER</pattern>
-		  <template><srai>BAD ANSWER</srai></template>
+		  <pattern>BAD ANSWER</pattern>
+		  <template>怎么样回答好呢？</template>
 	  </category>
 	  <category>
-		  <pattern>BAD ANSWER</pattern>
-		  <template>what would be a good answer?</template>
-	  </category>
+		  <pattern>NOT * GOOD ANSWER</pattern>
+		  <template><srai>BAD ANSWER</srai></template> 
+	  </category> 
 	  <category>
 		  <pattern>* BAD ANSWER *</pattern>
 		  <template><srai>NOT <star /> GOOD ANSWER</srai></template>
 	  </category>
-
+	  <category>
+		  <pattern>* 不 * 好 回 答 * </pattern>
+		  <template><srai>BAD ANSWER</srai></template>
+	  </category>
+	  <category>
+		  <pattern>不 * 好 回 答 * </pattern>
+		  <template><srai>BAD ANSWER</srai></template>
+	  </category>
+	  <category>
+		  <pattern>* 不 * 好 回 答</pattern>
+		  <template><srai>BAD ANSWER</srai></template>
+	  </category>   
+	  <category>
+		  <pattern>* 回 答 * 不 *</pattern>
+		  <template><srai>BAD ANSWER</srai></template>
+	  </category>   
+	  <category>
+		  <pattern>回 答 * 不 *</pattern>
+		  <template><srai>BAD ANSWER</srai></template>
+	  </category>   
+	  <category>
+		  <pattern>* 回 答 不 *</pattern>
+		  <template><srai>BAD ANSWER</srai></template>
+	  </category>   
+	  <category>
+		  <pattern>回 答 不 *</pattern>
+		  <template><srai>BAD ANSWER</srai></template>
+	  </category>   
+	  <category>
+		  <pattern>不 * 好 回 答</pattern>
+		  <template><srai>BAD ANSWER</srai></template>
+	  </category>   
 	  <category>
 		  <pattern>* NOT * GOOG ANSWER *</pattern>
 		  <template><srai> <star /> NOT <star /> GOOD ANSWER</srai></template>
 	  </category>
 	  <category>
 		  <pattern>*</pattern>
-		  <that>WHAT WOULD BE A GOOD ANSWER</that>
+		  <that>怎 么 样 回 答 好 呢</that>
 		  <template>
 			  <system>
 				  addtobrain(k, 'client.aiml', createcategory(u'<input index="3" />', u'<input index="1" />'))
