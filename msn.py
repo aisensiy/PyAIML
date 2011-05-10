@@ -38,7 +38,7 @@ class MsnListener(msnp.SessionCallbacks):
 		chat.send_message('hi')
 
 msn = msnp.Session(MsnListener())
-msn.login('aisensiy@live.cn', 'liangge8')
+msn.login('aisensiy@live.cn', '000000')
 
 prestart()
 
