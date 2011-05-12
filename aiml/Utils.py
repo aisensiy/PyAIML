@@ -6,10 +6,14 @@ modules in the PyAIML package.
 import re
 
 def chineseSplit(input):
-	return re.sub(u'([\u2e80-\uffff])(?=[\u2e80-\uffff])', r'\1 ', input)
+	result = re.sub(u'([\u2e80-\uffffa-zA-Z0-9])(?=[\u2e80-\uffff])', r'\1 ', input)
+	result = re.sub(u'([\u2e80-\uffff])(?=[\u2e80-\uffffa-zA-Z0-9])', r'\1 ', result)
+	return result
 
 def chineseCon(output):
-	return re.sub(u'([\u2e80-\uffff]) +(?=[\u2e80-\uffff])', r'\1', output)
+	result = re.sub(u'([\u2e80-\uffffa-zA-Z0-9]) +(?=[\u2e80-\uffff])', r'\1', output)
+	result = re.sub(u'([\u2e80-\uffff]) +(?=[\u2e80-\uffffa-zA-Z0-9])', r'\1', result)
+	return result
 
 def toUpperCase(strs):
 	return strs.upper()	

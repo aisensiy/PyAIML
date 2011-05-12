@@ -87,11 +87,14 @@
 						file.close()
 					kernel.learn(filename)
 
+				def test_systemresponse(kernel):
+					kernel.systemresponse = "success"
+
 				globals()['createcategory'] = createcategory
 				globals()['addtobrain'] = addtobrain
 				globals()['addcategory'] = addcategory
-
-      		</system>
+				globals()['test_systemresponse'] = test_systemresponse
+			</system>
       	</template>
       </category>
 	  <category>
@@ -157,7 +160,7 @@
 		  <pattern>*</pattern>
 		  <that>怎 么 样 回 答 好 呢</that>
 		  <template>
-			  <system>
+			  <system xml:space="preserve">>
 				  addtobrain(k, 'client.aiml', createcategory(u'<input index="3" />', u'<input index="1" />'))
 		      </system>
 			 好，你可以再试一试 
@@ -175,4 +178,89 @@
 		  <pattern>RESET TOPIC</pattern>
 		  <template><set name="topic"></set></template>
 	  </category>
+	  <category>
+		  <pattern>TEST SYSTEM RESPONSE</pattern>
+		  <template>
+			  <system xml:space="preserve">
+				  test_systemresponse(k)
+			  </system>
+		  </template>
+	  </category>   
+	  <category>
+		  <pattern>今 天 是 几 号</pattern>
+		  <template>
+			  今 天 是
+			  <system xml:space="preserve">
+				  calr = cal.Cal()
+				  k.systemresponse=calr.chineseformat(calr.today())
+			  </system>
+		  </template>
+	  </category>   
+      <category>
+		  <pattern> 明 天 是 几 号</pattern>
+		  <template>
+			  明 天 是
+			  <system xml:space="preserve">
+				  calr = cal.Cal()
+				  k.systemresponse=calr.chineseformat(calr.tomorrow())
+			  </system>
+		  </template>
+	  </category>   
+	  <category>
+		  <pattern>昨 天 是 几 号</pattern>
+		  <template>
+			  昨 天 是
+			  <system xml:space="preserve">
+				  calr = cal.Cal()
+				  k.systemresponse=calr.chineseformat(calr.yesterday())
+			  </system>
+		  </template>
+	  </category>   
+      <category>
+		  <pattern>今 天 是 周 几</pattern>
+		  <template>
+			  今 天 是
+			  <system xml:space="preserve">
+				  calr = cal.Cal()
+				  k.systemresponse=calr.weekday()
+			  </system>
+		  </template>
+	  </category>   
+	  <category>
+		  <pattern>这 周 * 是 几 号</pattern>
+		  <template>
+			  <system xml:space="preserve">
+				  calr = cal.Cal()
+				  k.systemresponse=calr.chineseformat(calr.dateofweekday(calr.chineseweek2num(u"<star />")))
+			  </system>
+		  </template>
+	  </category>   
+	  <category>
+		  <pattern>上 周 * 是 几 号</pattern>
+		  <template>
+			  <system xml:space="preserve">
+				  calr = cal.Cal()
+				  k.systemresponse=calr.chineseformat(calr.dateofweekday(calr.chineseweek2num(u"<star />"), calr.before(7)))
+			  </system>
+		  </template>
+	  </category>   
+	  <category>
+		  <pattern>下 周 * 是 几 号</pattern>
+		  <template>
+			  <system xml:space="preserve">
+				  calr = cal.Cal()
+				  k.systemresponse=calr.chineseformat(calr.dateofweekday(calr.chineseweek2num(u"<star />"), calr.after(7)))
+			  </system>
+		  </template>
+	  </category>   
+
+	  <category>
+		  <pattern>* 月 * 日 是 周 几</pattern>
+		  <template>
+			  <system xml:space="preserve">
+				  calr = cal.Cal()
+				  k.systemresponse = calr.weekday(tod=datetime.date(datetime.date.today().year, <star index="1" />, <star index="2" />))
+			  </system>
+		  </template>
+	  </category>   
 </aiml>

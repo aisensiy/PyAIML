@@ -24,6 +24,8 @@ import time
 import threading
 import xml.sax
 
+import cal
+import datetime
 
 class Kernel:
     # module constants
@@ -41,6 +43,7 @@ class Kernel:
         self._brain = PatternMgr()
         self._respondLock = threading.RLock()
         self._textEncoding = "utf-8"
+        self.systemresponse = ""
 
         # set up the sessions        
         self._sessions = {}
@@ -925,6 +928,8 @@ class Kernel:
         #----> then run the temp python
         try:
             execfile('temp.py', globals(), locals())
+            if self.systemresponse != "": 
+                response += self.systemresponse + "\n"
         except SyntaxError, err:
             sys.stderr.write(str(err))
         #----> comment the original codes
