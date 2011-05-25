@@ -102,7 +102,7 @@
 		  <template>
 			  <random>
 				  <li>这 个 回 答 起 来 比 较 困 难 哦。</li>
-				  <li>让 我 们 换 个 话 题 吧。你 喜 欢 旅 行 么? </li>
+				  <li>让 我 们 换 个 话 题 吧。</li>
 				  <li>嗯，不 好 说 哦</li>
 				  <li>这 个 我 不 知 道 怎 么 答 哦。</li>
 			  </random>
@@ -236,7 +236,25 @@
 		  </template>
 	  </category>   
 	  <category>
+		  <pattern>* 这 周 * 是 几 号</pattern>
+		  <template>
+			  <system xml:space="preserve">
+				  calr = cal.Cal()
+				  k.systemresponse=calr.chineseformat(calr.dateofweekday(calr.chineseweek2num(u"<star />")))
+			  </system>
+		  </template>
+	  </category>
+	  <category>
 		  <pattern>上 周 * 是 几 号</pattern>
+		  <template>
+			  <system xml:space="preserve">
+				  calr = cal.Cal()
+				  k.systemresponse=calr.chineseformat(calr.dateofweekday(calr.chineseweek2num(u"<star />"), calr.before(7)))
+			  </system>
+		  </template>
+	  </category>
+	  <category>
+		  <pattern>* 上 周 * 是 几 号</pattern>
 		  <template>
 			  <system xml:space="preserve">
 				  calr = cal.Cal()
@@ -246,6 +264,15 @@
 	  </category>   
 	  <category>
 		  <pattern>下 周 * 是 几 号</pattern>
+		  <template>
+			  <system xml:space="preserve">
+				  calr = cal.Cal()
+				  k.systemresponse=calr.chineseformat(calr.dateofweekday(calr.chineseweek2num(u"<star />"), calr.after(7)))
+			  </system>
+		  </template>
+	  </category>
+	  <category>
+		  <pattern>* 下 周 * 是 几 号</pattern>
 		  <template>
 			  <system xml:space="preserve">
 				  calr = cal.Cal()
@@ -262,5 +289,16 @@
 				  k.systemresponse = calr.weekday(tod=datetime.date(datetime.date.today().year, <star index="1" />, <star index="2" />))
 			  </system>
 		  </template>
-	  </category>   
+	  </category>
+	  
+	  <category>
+		  <pattern>* 月 * 号 是 周 几</pattern>
+		  <template>
+			  <system xml:space="preserve">
+				  calr = cal.Cal()
+				  k.systemresponse = calr.weekday(tod=datetime.date(datetime.date.today().year, <star index="1" />, <star index="2" />))
+			  </system>
+		  </template>
+	  </category>     
+	  
 </aiml>
